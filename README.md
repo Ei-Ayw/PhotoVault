@@ -1,306 +1,257 @@
-# Photo Gallery - Laravel 11 Application
+# 📸 Minimalist Photo Gallery
 
-A minimalist personal photo gallery system built with Laravel 11, featuring user authentication, role-based authorization, image watermarking, and a beautiful responsive UI.
+A beautiful and secure Laravel-based photo gallery application with advanced watermarking features and admin panel.
 
-## 🎓 University Assignment
+[![Laravel](https://img.shields.io/badge/Laravel-11.x-red.svg)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.3-blue.svg)](https://php.net)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-This is a high-grade course assignment demonstrating:
-- **MVC Architecture** with clear separation of concerns
-- **Advanced Image Processing** with automatic watermarking
-- **Policy-based Authorization** for role management
-- **Responsive UI/UX** with Tailwind CSS
-- **Cross-platform Compatibility** (Windows & AWS Ubuntu)
+## ✨ Features
 
-## 🚀 Features
+### 🎨 Core Features
+- **User Authentication** - Secure registration and login with Laravel Breeze
+- **Photo Upload** - Support for JPG, JPEG, PNG (max 2MB)
+- **Smart Watermarking** 
+  - Display watermark: Small corner watermark with uploader's name
+  - Download watermark: Diagonal pattern for guest users
+  - Original download: No watermark for authenticated users
+- **Responsive Gallery** - Beautiful grid layout that works on all devices
+- **Photo Management** - Edit, delete your own photos
+- **Authorization** - Policy-based access control
 
-### Core Functionality
-- ✅ **User Authentication** (Laravel Breeze)
-- ✅ **Photo Upload** with automatic watermarking
-- ✅ **Role-based Access Control** (Regular Users & Administrators)
-- ✅ **Responsive Grid Layout** (Tailwind CSS)
-- ✅ **Image Validation** (JPG, PNG, max 2MB)
-- ✅ **Pagination** (12 photos per page)
+### 👨‍💼 Admin Features
+- **User Management** - Full CRUD operations for users
+- **Photo Management** - Manage all uploaded photos
+- **Dashboard Statistics** - Total users, photos, uploads today, top uploaders
+- **Content Moderation** - Admins can delete any photo
 
-### Authorization Rules (PhotoPolicy)
-- **View**: Public access (guests & authenticated users)
-- **Create**: Authenticated users only
-- **Delete**: 
-  - Regular users can delete their own photos
-  - Administrators can delete ANY photo (content moderation)
+### 🔒 Security Features
+- CSRF protection
+- SQL injection prevention
+- XSS protection
+- File upload validation
+- Policy-based authorization
+- HTTPS support
 
-### Advanced Features
-- 🎨 **Automatic Watermarking**: Uploader's username added to bottom-right corner
-- 📱 **Fully Responsive**: Grid layout adapts to all screen sizes
-- 🔒 **Secure File Upload**: Validation and sanitization
-- ⚡ **Performance**: Optimized with eager loading and pagination
+## 🚀 Quick Start
 
-## 📋 Technical Stack
+### Local Development (Windows)
 
-- **Framework**: Laravel 11
-- **Frontend**: Blade Templates + Tailwind CSS
-- **Authentication**: Laravel Breeze (Blade version)
-- **Database**: MySQL
-- **Image Processing**: Intervention Image 3.x
-- **PHP Version**: 8.2+ (tested with 8.3.26)
+```powershell
+# Clone the repository
+git clone https://github.com/Ei-Ayw/photo-gallery-test.git
+cd photo-gallery-test
 
-## 🔧 Installation Instructions
+# Run the setup script
+.\quick-start.ps1
+```
 
-### Prerequisites
+The script will:
+- ✅ Install Composer dependencies
+- ✅ Configure environment
+- ✅ Set up database
+- ✅ Run migrations
+- ✅ Create admin user
+- ✅ Start development server
+
+Access the application at: `http://localhost:8000`
+
+**Default Admin Credentials:**
+- Email: `admin@photogallery.com`
+- Password: `admin123`
+
+### Manual Setup
+
+See [SETUP.md](SETUP.md) for detailed manual installation instructions.
+
+## 🌐 AWS Deployment
+
+### Automated Deployment (Recommended)
+
+```bash
+# Connect to your AWS Ubuntu server
+ssh -i "your-key.pem" ubuntu@your-ec2-ip
+
+# Download and run deployment script
+wget https://raw.githubusercontent.com/Ei-Ayw/photo-gallery-test/main/deploy.sh
+chmod +x deploy.sh
+./deploy.sh
+```
+
+### Manual Deployment
+
+See [AWS_DEPLOYMENT.md](AWS_DEPLOYMENT.md) for complete deployment guide.
+
+**Quick Reference:** [DEPLOYMENT_QUICKSTART.md](DEPLOYMENT_QUICKSTART.md)
+
+## 📋 Requirements
+
+### Local Development
 - PHP 8.2 or higher
 - Composer
-- MySQL
-- Node.js & NPM
+- MySQL 8.0 or higher
+- Node.js & NPM (optional, for frontend assets)
+- GD Library (for image processing)
 
-### Setup Steps
+### AWS Production
+- AWS EC2 instance (Ubuntu 22.04 LTS)
+- LAMP Stack (Apache, MySQL, PHP 8.3)
+- SSL Certificate (Certbot)
+- Domain name (recommended)
 
-#### 1. Install Dependencies
+## 🎯 Technical Highlights
+
+This project demonstrates:
+
+1. **Laravel 11 Best Practices**
+   - RESTful routing
+   - Policy-based authorization
+   - Eloquent ORM
+   - Blade templating
+   - Middleware
+
+2. **Advanced Image Processing**
+   - Dynamic watermark generation
+   - GD Library integration
+   - Conditional watermarking logic
+
+3. **Security Implementation**
+   - Input validation
+   - CSRF protection
+   - Authorization policies
+   - Secure file uploads
+
+4. **Professional Deployment**
+   - AWS LAMP setup
+   - HTTPS configuration
+   - Production optimization
+   - Automated deployment script
+
+## 📖 Documentation
+
+- [Setup Guide](SETUP.md) - Local development setup
+- [Features Documentation](FEATURES.md) - Detailed feature list
+- [Admin Panel Guide](ADMIN_PANEL.md) - Admin features overview
+- [Watermark Implementation](WATERMARK_IMPLEMENTATION.md) - Technical details
+- [AWS Deployment Guide](AWS_DEPLOYMENT.md) - Production deployment
+- [Deployment Summary](DEPLOYMENT_SUMMARY.md) - Deployment checklist
+- [Security Guide](SECURITY_FIX.md) - Security features
+
+## 🏗️ Project Structure
+
+```
+photo-gallery/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── PhotoController.php      # Photo CRUD & watermarking
+│   │   │   ├── AdminController.php      # Admin panel
+│   │   │   └── ProfileController.php    # User profile
+│   │   └── Middleware/
+│   │       └── AdminMiddleware.php      # Admin access control
+│   ├── Models/
+│   │   ├── User.php                     # User model
+│   │   └── Photo.php                    # Photo model
+│   └── Policies/
+│       └── PhotoPolicy.php              # Photo authorization
+├── database/
+│   └── migrations/                      # Database migrations
+├── resources/
+│   └── views/
+│       ├── photos/                      # Photo views
+│       ├── admin/                       # Admin panel views
+│       └── layouts/                     # Layout templates
+├── routes/
+│   └── web.php                         # Application routes
+├── storage/
+│   └── app/
+│       └── public/
+│           └── photos/                  # Uploaded photos
+└── public/
+    └── storage -> ../storage/app/public # Symbolic link
+```
+
+## 🎨 Screenshots
+
+### Gallery View
+![Gallery](docs/screenshots/gallery.png)
+
+### Photo Detail with Watermark
+![Photo Detail](docs/screenshots/photo-detail.png)
+
+### Admin Dashboard
+![Admin Dashboard](docs/screenshots/admin-dashboard.png)
+
+## 🧪 Testing
+
 ```bash
-cd photo-gallery
-composer install
-npm install
+# Run tests
+php artisan test
+
+# Run specific test
+php artisan test --filter PhotoUploadTest
 ```
 
-#### 2. Environment Configuration
-The `.env` file is already configured for local MySQL:
-- Database: `photo_gallery`
-- Host: `localhost` (127.0.0.1)
-- Port: `3306`
-- Username: `root`
-- Password: `123456`
+## 🔄 Update Application
 
-If your MySQL credentials are different, update the `.env` file accordingly.
-
-#### 3. Create Database
-Start your MySQL server, then create the database:
 ```bash
-mysql -u root -p
-CREATE DATABASE photo_gallery CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-exit;
-```
+# Pull latest changes
+git pull origin main
 
-Or use the command:
-```bash
-mysql -u root -p123456 -e "CREATE DATABASE photo_gallery CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-```
-
-#### 4. Run Migrations
-```bash
-php artisan migrate
-```
-
-This will create:
-- `users` table with `is_admin` column
-- `photos` table with all required fields
-- Other Laravel default tables
-
-#### 5. Create Storage Link
-```bash
-php artisan storage:link
-```
-
-This creates a symbolic link from `public/storage` to `storage/app/public` for serving uploaded photos.
-
-#### 6. Build Frontend Assets
-```bash
-npm run build
-```
-
-For development:
-```bash
-npm run dev
-```
-
-#### 7. Start Development Server
-```bash
-php artisan serve
-```
-
-Visit: `http://localhost:8000`
-
-## 👤 Creating Admin Users
-
-To create an administrator account:
-
-1. Register a normal user through the web interface
-2. Manually update the database:
-```sql
-UPDATE users SET is_admin = 1 WHERE email = 'admin@example.com';
-```
-
-Or use Laravel Tinker:
-```bash
-php artisan tinker
->>> $user = User::where('email', 'admin@example.com')->first();
->>> $user->is_admin = true;
->>> $user->save();
-```
-
-## 📁 Project Structure
-
-```
-app/
-├── Http/
-│   ├── Controllers/
-│   │   ├── Controller.php          # Base controller with AuthorizesRequests trait
-│   │   └── PhotoController.php     # Complete CRUD with watermarking
-│   └── ...
-├── Models/
-│   ├── User.php                     # User model with is_admin & photos relationship
-│   └── Photo.php                    # Photo model with fillable & user relationship
-├── Policies/
-│   └── PhotoPolicy.php              # Authorization logic (viewAny, create, delete)
-└── ...
-
-database/
-└── migrations/
-    ├── *_add_is_admin_to_users_table.php
-    └── *_create_photos_table.php
-
-resources/
-└── views/
-    ├── photos/
-    │   ├── index.blade.php          # Gallery homepage with grid
-    │   ├── create.blade.php         # Upload form
-    │   ├── show.blade.php           # Single photo view
-    │   └── edit.blade.php           # Edit photo details
-    └── layouts/
-        ├── app.blade.php
-        └── navigation.blade.php     # Updated with admin panel link
-
-routes/
-└── web.php                           # All routes defined
-```
-
-## 🎨 UI/UX Highlights
-
-- **Modern Design**: Gradient backgrounds, smooth transitions, hover effects
-- **Card-based Layout**: Clean photo cards with shadows and hover animations
-- **Responsive Grid**: 1-4 columns based on screen size
-- **Visual Feedback**: Success/error messages with animations
-- **Conditional UI**: Action buttons shown based on user permissions (@can directive)
-- **Loading States**: Lazy loading for images
-- **Empty States**: Friendly messages when no photos exist
-
-## 🔒 Security Features
-
-- **CSRF Protection**: All forms protected
-- **File Validation**: Type and size restrictions
-- **Policy Authorization**: Explicit permission checks
-- **SQL Injection Prevention**: Eloquent ORM
-- **Mass Assignment Protection**: $fillable arrays
-- **XSS Prevention**: Blade escaping
-
-## 📝 Code Quality
-
-All code includes:
-- ✅ **English Comments**: Detailed explanations for assignment report
-- ✅ **Clear Variable Names**: Self-documenting code
-- ✅ **Proper Indentation**: PSR-12 coding standards
-- ✅ **Error Handling**: Validation and user feedback
-- ✅ **DRY Principle**: No code duplication
-
-## 🌐 AWS Ubuntu Deployment
-
-For production deployment on AWS Ubuntu:
-
-1. Update `.env` file DATABASE settings:
-```env
-DB_CONNECTION=mysql
-DB_HOST=your-rds-endpoint
-DB_PORT=3306
-DB_DATABASE=photo_gallery
-DB_USERNAME=your-db-username
-DB_PASSWORD=your-db-password
-```
-
-2. Set proper permissions:
-```bash
-chmod -R 775 storage bootstrap/cache
-chown -R www-data:www-data storage bootstrap/cache
-```
-
-3. Configure Apache/Nginx to point to `public` directory
-
-4. Run production build:
-```bash
+# Update dependencies
 composer install --optimize-autoloader --no-dev
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-npm run build
+
+# Run migrations
+php artisan migrate --force
+
+# Clear cache
+php artisan cache:clear
+php artisan config:clear
+php artisan view:clear
 ```
-
-## 📚 Technologies Used
-
-- **Laravel 11.x**: Latest PHP framework
-- **Intervention Image 3.11**: Image manipulation with GD driver
-- **Tailwind CSS**: Utility-first CSS framework
-- **Alpine.js**: Lightweight JavaScript framework (via Breeze)
-- **MySQL**: Relational database
-- **Vite**: Frontend build tool
-
-## 🎯 Assignment Requirements Met
-
-- ✅ Laravel 11 & PHP 8.2+
-- ✅ Blade Templates + Tailwind CSS
-- ✅ Laravel Breeze Authentication
-- ✅ MySQL Database with proper migrations
-- ✅ Users table with `is_admin` field
-- ✅ Photos table with all required columns
-- ✅ PhotoPolicy with proper authorization
-- ✅ PhotoController with CRUD operations
-- ✅ Image watermarking (ADVANCED TECHNIQUE)
-- ✅ Form validation (file type & size)
-- ✅ Responsive grid layout
-- ✅ Pagination (12 photos per page)
-- ✅ @can directive for conditional UI
-- ✅ Cross-platform file path handling
-- ✅ English code comments
-
-## 📄 License
-
-This is a university assignment project. For educational purposes only.
-
-## 👨‍💻 Development Notes
-
-- Watermarking uses Intervention Image with GD driver
-- File paths use Laravel's `Storage` facade for cross-platform compatibility
-- Authorization handled by Policy, not manual checks
-- All routes follow RESTful conventions
-- UI uses modern CSS3 animations and transitions
 
 ## 🐛 Troubleshooting
 
-### MySQL Connection Error
+### Common Issues
+
+**500 Internal Server Error**
 ```bash
-# Start MySQL service
-# Windows (XAMPP):
-Start XAMPP and click "Start" for MySQL
-
-# Windows (Standalone MySQL):
-net start MySQL80
-
-# Ubuntu:
-sudo service mysql start
+sudo chown -R www-data:www-data storage bootstrap/cache
+sudo chmod -R 775 storage bootstrap/cache
+php artisan cache:clear
 ```
 
-### Storage Link Not Working
+**Image Upload Not Working**
 ```bash
-# Remove existing link and recreate
-rm public/storage
+sudo chown -R www-data:www-data storage/app/public/photos
+sudo chmod -R 775 storage/app/public/photos
 php artisan storage:link
 ```
 
-### Images Not Displaying
-Check that:
-1. Storage link exists: `public/storage` → `storage/app/public`
-2. Folder permissions are correct (775)
-3. Images are in `storage/app/public/photos/`
+**Database Connection Error**
+- Check `.env` database credentials
+- Ensure MySQL service is running
+- Verify database exists
 
-## 📞 Support
+See [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md) for more troubleshooting tips.
 
-For questions about this assignment, please refer to the inline code comments or contact the course instructor.
+## 📝 License
+
+This project is open-sourced software licensed under the [MIT license](LICENSE).
+
+## 👨‍💻 Author
+
+**Ayw**
+
+## 🙏 Acknowledgments
+
+- Laravel Framework
+- Intervention Image Library
+- Tailwind CSS
+- Laravel Breeze
 
 ---
 
-**Built with ❤️ for COMP10015 Course Assignment**
+**Need help?** Check the documentation files or create an issue on GitHub.
+
+**Ready to deploy?** Follow the [AWS Deployment Guide](AWS_DEPLOYMENT.md).
