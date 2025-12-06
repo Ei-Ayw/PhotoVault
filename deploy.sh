@@ -59,6 +59,7 @@ DB_NAME=${DB_NAME:-photo_gallery}
 read -p "Enter database username [photo_user]: " DB_USER
 DB_USER=${DB_USER:-photo_user}
 
+# 填的是：123456
 read -sp "Enter database password: " DB_PASS
 echo ""
 
@@ -136,6 +137,9 @@ fi
 # Update .env file
 read -p "Enter your domain or IP address: " APP_URL
 sed -i "s|APP_URL=.*|APP_URL=http://${APP_URL}|g" .env
+sed -i "s|DB_CONNECTION=.*|DB_CONNECTION=mysql|g" .env
+sed -i "s|DB_HOST=.*|DB_HOST=127.0.0.1|g" .env
+sed -i "s|DB_PORT=.*|DB_PORT=3306|g" .env
 sed -i "s|DB_DATABASE=.*|DB_DATABASE=${DB_NAME}|g" .env
 sed -i "s|DB_USERNAME=.*|DB_USERNAME=${DB_USER}|g" .env
 sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=${DB_PASS}|g" .env
@@ -146,10 +150,20 @@ sed -i "s|APP_DEBUG=.*|APP_DEBUG=false|g" .env
 php artisan key:generate --force
 print_success "Environment configured"
 
-# Step 10: Set permissions
+# Step 10: Set permissions (BEFORE migrations)
 print_info "Setting permissions..."
 sudo chown -R www-data:www-data storage bootstrap/cache
 sudo chmod -R 775 storage bootstrap/cache
+
+# Also give current user access
+sudo usermod -a -G www-data $USER
+
+# Create log directory if it doesn't exist
+sudo mkdir -p storage/logs
+sudo touch storage/logs/laravel.log
+sudo chown -R www-data:www-data storage/logs
+sudo chmod -R 775 storage/logs
+
 print_success "Permissions set"
 
 # Step 11: Run migrations
